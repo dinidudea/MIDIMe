@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MP3 to MIDI Converter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>MP3 to MIDI Converter</h1>
+        <div class="upload-area">
+            <form method="post" enctype="multipart/form-data" id="upload-form">
+                <input type="file" name="file" id="file-input" accept=".mp3">
+                <label for="file-input" id="file-label">
+                    Drag and Drop or Click to Upload MP3 File
+                </label>
+                <div id="file-name"></div>
+                <button type="submit" id="convert-button">Convert to MIDI</button>
+            </form>
+            <div id="status-message">
+                {% if error %}
+                    <p class="error-message">{{ error }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <script>
+         document.getElementById('file-input').addEventListener('change', function(event) {
+                var file = event.target.files[0];
+                if (file) {
+                    document.getElementById('file-name').textContent = 'Selected file: ' + file.name;
+                    document.getElementById('file-label').style.display = 'none';
+                } else {
+                     document.getElementById('file-name').textContent = '';
+                     document.getElementById('file-label').style.display = 'block';
+                }
+            });
+
+         document.getElementById('upload-form').addEventListener('submit', function() {
+            document.getElementById('status-message').textContent = 'Processing...';
+            document.getElementById('convert-button').disabled = true;
+         });
+    </script>
+</body>
+</html>
